@@ -1,0 +1,36 @@
+{
+  "cds": [
+    {
+      "id": 1,
+      "title": "Titre 1",
+      "author": "Auteur 1",
+      "genre": "N roll",
+      "price": 18,
+      "image": "images/image.webp"
+    },
+    {
+      "id": 2,
+      "title": "Titre 2",
+      "author": "Auteur 2",
+      "genre": "Rap",
+      "price": 25,
+      "image": "images/booba.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Titre 3",
+      "author": "Auteur 3",
+      "genre": "House",
+      "price": 20,
+      "image": "images/pnl.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Titre 4",
+      "author": "Auteur 4",
+      "genre": "Electro",
+      "price": 0.4,
+      "image": "images/pnl2.jpg"
+    }
+  ]
+}
