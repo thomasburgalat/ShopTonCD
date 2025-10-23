@@ -29,7 +29,8 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
         <ul class="nav">
             <li class="nav-item"><a class="nav-link text-white" href="index.php">Accueil</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="panier.php">Panier (<?php echo $nombre_articles_panier; ?>)</a></li>
-            <li class="nav-item"><a class="nav-link text-warning" href="../src/includes/logout.php">Déconnexion</a></li>
+            <li class="nav-item"><a class="nav-link text-warning" href="ajouter_album.php">Ajouter un album</a></li>
+            <li class="nav-item"><a class="nav-link text-danger" href="../src/includes/logout.php">Déconnexion</a></li>
         </ul>
     </nav
 </header>
