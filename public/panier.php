@@ -31,7 +31,7 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
             <li class="nav-item"><a class="nav-link text-white" href="panier.php">Panier (<?php echo $nombre_articles_panier; ?>)</a></li>
             <li class="nav-item"><a class="nav-link text-warning" href="../src/includes/logout.php">Déconnexion</a></li>
         </ul>
-    </nav>
+    </nav
 </header>
 
 <main class="container mt-4">
@@ -40,7 +40,7 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
     <?php if (empty($_SESSION['panier'])): ?>
         <div class="alert alert-info">Votre panier est vide.</div>
     <?php else: ?>
-        <table class="table">
+        <table class="table align-middle">
             <thead>
             <tr>
                 <th>Article</th>
@@ -53,7 +53,7 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
             <?php
             $total_general = 0;
             foreach ($_SESSION['panier'] as $cd_id => $quantite):
-                if (!isset($cds_par_id[$cd_id])) continue; // Sécurité au cas où un ID n'existe plus
+                if (!isset($cds_par_id[$cd_id])) continue; // Sécurité
                 $cd = $cds_par_id[$cd_id];
                 $sous_total = $cd['price'] * $quantite;
                 $total_general += $sous_total;
@@ -61,7 +61,15 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
                 <tr>
                     <td><?php echo htmlspecialchars($cd['title']); ?> - <?php echo htmlspecialchars($cd['author']); ?></td>
                     <td><?php echo number_format($cd['price'], 2); ?> €</td>
-                    <td class="text-center"><?php echo $quantite; ?></td>
+
+                    <td class="text-center">
+                        <form action="../src/includes/modifier_panier.php" method="post" class="d-flex justify-content-center">
+                            <input type="hidden" name="cd_id" value="<?php echo $cd_id; ?>">
+                            <input type="number" name="quantite" value="<?php echo $quantite; ?>" min="0" class="form-control form-control-sm" style="width: 70px;">
+                            <button type="submit" class="btn btn-primary btn-sm ms-2">OK</button>
+                            <a href="../src/includes/modifier_panier.php?supprimer_id=<?php echo $cd_id; ?>" class="btn btn-danger btn-sm ms-1">X</a>
+                        </form>
+                    </td>
                     <td class="text-end"><?php echo number_format($sous_total, 2); ?> €</td>
                 </tr>
             <?php endforeach; ?>

@@ -6,7 +6,7 @@
       "author": "Auteur 1",
       "genre": "N roll",
       "price": 18,
-      "image": "../vignettes/image.webp"
+      "image": "image.webp"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "author": "Auteur 2",
       "genre": "Rap",
       "price": 25,
-      "image": "../vignettes/booba.jpg"
+      "image": "booba.jpg"
     },
     {
       "id": 3,
@@ -22,7 +22,7 @@
       "author": "Auteur 3",
       "genre": "House",
       "price": 20,
-      "image": "../vignettes/pnl.jpg"
+      "image": "pnl.jpg"
     },
     {
       "id": 4,
@@ -30,7 +30,7 @@
       "author": "Auteur 4",
       "genre": "Electro",
       "price": 0.4,
-      "image": "vignettes/pnl2.jpg"
+      "image": "pnl2.jpg"
     }
   ]
 }

@@ -13,80 +13,68 @@ if (!isset($_SESSION['panier'])) {
 }
 $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['panier']) : 0;
 
+// On lit le JSON (qui ne contient que les noms de fichiers)
 $json_path = '../data/cd.json';
 $donnees = json_decode(file_get_contents($json_path), true);
 
 /**
- * Crée une vignette pour une image.
- * Vérifie l'existence des dossiers et des fonctions GD.
+ * Crée une vignette à partir d'un nom de fichier image.
  */
-function faireVignette($image_nom) {
+function faireVignette($image_nom_fichier) { // $image_nom_fichier est "booba.jpg"
     $dossier_images = 'images/';
     $dossier_vignettes = 'vignettes/';
-    $image_originale_path = $dossier_images . $image_nom;
-    $vignette_path = $dossier_vignettes . $image_nom;
 
-    // Si l'image originale n'existe pas, on arrête.
+    // Chemin de l'image originale (ex: "images/booba.jpg")
+    $image_originale_path = $dossier_images . $image_nom_fichier;
+
+    // Chemin de la vignette (ex: "vignettes/booba.jpg")
+    $vignette_path = $dossier_vignettes . $image_nom_fichier;
+
+    // Si l'originale n'existe pas, on sort
     if (!file_exists($image_originale_path)) {
-        return $dossier_images . 'default.jpg'; // Prévoir une image default.jpg dans /images
+        return 'images/default.jpg'; // Avoir une image par défaut
     }
 
-    // Si la vignette existe déjà, on la retourne.
+    // Si la vignette existe déjà, on la retourne direct
     if (file_exists($vignette_path)) {
         return $vignette_path;
     }
 
-    // On vérifie si le dossier vignettes existe ET si on peut écrire dedans.
+    // Si le dossier vignettes/ n'existe pas, on le crée
     if (!is_dir($dossier_vignettes)) {
-        // On tente de le créer. Si ça échoue, c'est un problème de permissions.
         if (!mkdir($dossier_vignettes, 0755, true)) {
-            error_log("Impossible de créer le dossier des vignettes. Vérifiez les permissions sur le dossier 'public'.");
-            return $image_originale_path; // On retourne l'image originale si on ne peut pas créer la vignette
+            return $image_originale_path; // Si on n'arrive pas à créer, on renvoie l'originale
         }
     }
 
     $extension = strtolower(pathinfo($image_originale_path, PATHINFO_EXTENSION));
     $img = null;
 
-    // On charge l'image en mémoire
+    // On charge l'image en mémoire (c'est ça qui peut planter si GD n'est pas là)
     switch ($extension) {
         case 'jpeg':
-        case 'jpg':
-            if (function_exists('imagecreatefromjpeg')) {
-                $img = @imagecreatefromjpeg($image_originale_path);
-            }
-            break;
-        case 'png':
-            if (function_exists('imagecreatefrompng')) {
-                $img = @imagecreatefrompng($image_originale_path);
-            }
-            break;
-        case 'webp':
-            if (function_exists('imagecreatefromwebp')) {
-                $img = @imagecreatefromwebp($image_originale_path);
-            }
-            break;
+        case 'jpg': $img = @imagecreatefromjpeg($image_originale_path); break;
+        case 'png': $img = @imagecreatefrompng($image_originale_path); break;
+        case 'webp': $img = @imagecreatefromwebp($image_originale_path); break;
     }
 
-    // Si l'image n'a pas pu être chargée (extension GD manquante pour ce format)
+    // Si ça a planté, on renvoie l'image originale
     if (!$img) {
-        error_log("L'extension GD pour le format '$extension' n'est pas activée.");
-        return $image_originale_path; // On retourne l'image originale
+        return $image_originale_path;
     }
 
     // On crée la vignette
-    $largeur = imagesx($img);
-    $hauteur = imagesy($img);
     $vignette = imagecreatetruecolor(250, 250);
-    imagecopyresampled($vignette, $img, 0, 0, 0, 0, 250, 250, $largeur, $hauteur);
+    imagecopyresampled($vignette, $img, 0, 0, 0, 0, 250, 250, imagesx($img), imagesy($img));
 
-    // On sauvegarde la vignette en JPEG (format le plus compatible)
+    // On la sauvegarde
     imagejpeg($vignette, $vignette_path, 90);
 
     // On libère la mémoire
     imagedestroy($img);
     imagedestroy($vignette);
 
+    // On renvoie le chemin de la vignette qui vient d'être créée
     return $vignette_path;
 }
 ?>
@@ -113,10 +101,20 @@ function faireVignette($image_nom) {
 <main class="container">
     <div class="row">
         <?php foreach ($donnees['cds'] as $cd): ?>
+            <?php
+            // 1. On prépare le chemin de la VRAIE image (ex: "images/booba.jpg")
+            $path_originale = 'images/' . $cd['image'];
+
+            // 2. On TENTE de créer la vignette.
+            // $path_vignette sera "vignettes/booba.jpg" (si ça marche)
+            // ou "images/booba.jpg" (si ça rate)
+            $path_vignette = faireVignette($cd['image']);
+            ?>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <?php $path_image = faireVignette($cd['image']); ?>
-                    <img src="<?php echo $path_image; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($cd['title']); ?>">
+
+                    <img src="<?php echo $path_vignette; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($cd['title']); ?>">
+
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title"><?php echo htmlspecialchars($cd['title']); ?></h5>
                         <p class="card-text text-muted"><?php echo htmlspecialchars($cd['author']); ?></p>
@@ -133,9 +131,9 @@ function faireVignette($image_nom) {
                                 data-cd-author="<?php echo htmlspecialchars($cd['author']); ?>"
                                 data-cd-genre="<?php echo htmlspecialchars($cd['genre']); ?>"
                                 data-cd-price="<?php echo number_format($cd['price'], 2); ?> €"
-                                data-cd-image="<?php echo $path_image; ?>">
-                            Plus d'infos
+                                data-cd-image="<?php echo $path_originale; ?>"> Plus d'infos
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -163,36 +161,32 @@ function faireVignette($image_nom) {
         </div>
     </div>
 </div>
+
 <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script>
-    // Ce script s'exécute quand la modale est sur le point de s'ouvrir
     var detailsModal = document.getElementById('detailsModal');
     detailsModal.addEventListener('show.bs.modal', function (event) {
-        // Bouton qui a déclenché la modale
         var button = event.relatedTarget;
 
-        // Extraire les infos des attributs data-* du bouton
+        // Le script récupère le chemin de la VRAIE image
+        var image = button.getAttribute('data-cd-image');
         var title = button.getAttribute('data-cd-title');
+        // ...et le reste
         var author = button.getAttribute('data-cd-author');
         var genre = button.getAttribute('data-cd-genre');
         var price = button.getAttribute('data-cd-price');
-        var image = button.getAttribute('data-cd-image');
 
-        // Mettre à jour le contenu de la modale avec ces infos
-        var modalTitle = detailsModal.querySelector('.modal-title');
+        // Il met tout à jour dans la modale
         var modalImage = detailsModal.querySelector('#modal-cd-image');
-        var modalCdTitle = detailsModal.querySelector('#modal-cd-title');
-        var modalAuthor = detailsModal.querySelector('#modal-cd-author');
-        var modalGenre = detailsModal.querySelector('#modal-cd-genre');
-        var modalPrice = detailsModal.querySelector('#modal-cd-price');
+        modalImage.src = image; // <-- C'est ici qu'il met la VRAIE image
 
-        modalTitle.textContent = title;
-        modalImage.src = image;
-        modalCdTitle.textContent = title;
-        modalAuthor.textContent = author;
-        modalGenre.textContent = genre;
-        modalPrice.textContent = price;
+        detailsModal.querySelector('.modal-title').textContent = title;
+        detailsModal.querySelector('#modal-cd-title').textContent = title;
+        detailsModal.querySelector('#modal-cd-author').textContent = author;
+        detailsModal.querySelector('#modal-cd-genre').textContent = genre;
+        detailsModal.querySelector('#modal-cd-price').textContent = price;
     });
 </script>
+
 </body>
 </html>
