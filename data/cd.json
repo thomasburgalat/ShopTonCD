@@ -31,6 +31,166 @@
       "genre": "Electro",
       "price": 0.4,
       "image": "pnl2.jpg"
+    },
+    {
+      "id": 6,
+      "title": "The Eminem Show",
+      "author": "Eminem",
+      "genre": "Rap",
+      "price": 19,
+      "image": "eminem_show.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Discovery",
+      "author": "Daft Punk",
+      "genre": "House",
+      "price": 23,
+      "image": "discovery.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Back in Black",
+      "author": "AC/DC",
+      "genre": "Hard Rock",
+      "price": 20,
+      "image": "back_in_black.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Homework",
+      "author": "Daft Punk",
+      "genre": "House",
+      "price": 22,
+      "image": "homework.jpg"
+    },
+    {
+      "id": 10,
+      "title": "The Chronic",
+      "author": "Dr. Dre",
+      "genre": "Rap",
+      "price": 25,
+      "image": "chronic.jpg"
+    },
+    {
+      "id": 11,
+      "title": "Kind of Blue",
+      "author": "Miles Davis",
+      "genre": "Jazz",
+      "price": 26,
+      "image": "kind_of_blue.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Led Zeppelin IV",
+      "author": "Led Zeppelin",
+      "genre": "Rock",
+      "price": 21,
+      "image": "led_zeppelin_iv.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Rumours",
+      "author": "Fleetwood Mac",
+      "genre": "Rock",
+      "price": 19,
+      "image": "rumours.jpg"
+    },
+    {
+      "id": 14,
+      "title": "OK Computer",
+      "author": "Radiohead",
+      "genre": "Rock Alternatif",
+      "price": 23,
+      "image": "ok_computer.jpg"
+    },
+    {
+      "id": 15,
+      "title": "Appetite for Destruction",
+      "author": "Guns N' Roses",
+      "genre": "Hard Rock",
+      "price": 20,
+      "image": "appetite_destruction.jpg"
+    },
+    {
+      "id": 16,
+      "title": "Graduation",
+      "author": "Kanye West",
+      "genre": "Hip-Hop",
+      "price": 22,
+      "image": "graduation.jpg"
+    },
+    {
+      "id": 17,
+      "title": "Hotel California",
+      "author": "Eagles",
+      "genre": "Rock",
+      "price": 19,
+      "image": "hotel_california.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Born to Run",
+      "author": "Bruce Springsteen",
+      "genre": "Rock",
+      "price": 20,
+      "image": "born_to_run.jpg"
+    },
+    {
+      "id": 19,
+      "title": "To Pimp a Butterfly",
+      "author": "Kendrick Lamar",
+      "genre": "Rap",
+      "price": 24,
+      "image": "to_pimp_butterfly.jpg"
+    },
+    {
+      "id": 20,
+      "title": "Blue Lines",
+      "author": "Massive Attack",
+      "genre": "Trip-Hop",
+      "price": 22,
+      "image": "blue_lines.jpg"
+    },
+    {
+      "id": 21,
+      "title": "In Utero",
+      "author": "Nirvana",
+      "genre": "Grunge",
+      "price": 18,
+      "image": "in_utero.jpg"
+    },
+    {
+      "id": 22,
+      "title": "The Wall",
+      "author": "Pink Floyd",
+      "genre": "Rock Progressif",
+      "price": 28,
+      "image": "the_wall.jpg"
+    },
+    {
+      "id": 23,
+      "title": "Illmatic",
+      "author": "Nas",
+      "genre": "Rap",
+      "price": 23,
+      "image": "illmatic.jpg"
+    },
+    {
+      "id": 24,
+      "title": "Aja",
+      "author": "Steely Dan",
+      "genre": "Jazz Rock",
+      "price": 21,
+      "image": "aja.jpg"
+    },
+    {
+      "id": 25,
+      "title": "Cross",
+      "author": "Justice",
+      "genre": "Electro",
+      "price": 23,
+      "image": "cross_justice.jpg"
     }
   ]
 }
