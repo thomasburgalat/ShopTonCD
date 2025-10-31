@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-// --- SÉCURITÉ ---
+
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true) {
     header('Location: login.php');
     exit;
 }
 
-// On récupère le nombre d'articles (qui devrait être 0 maintenant)
 $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['panier']) : 0;
 ?>
 <!DOCTYPE html>

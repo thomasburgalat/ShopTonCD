@@ -14,7 +14,6 @@ if (empty($_SESSION['panier'])) {
 }
 // --- FIN SÉCURITÉ ---
 
-// Re-calculer le total pour l'afficher
 $json = file_get_contents('../data/cd.json');
 $donnees = json_decode($json, true);
 $cds_par_id = array_column($donnees['cds'], null, 'id');
