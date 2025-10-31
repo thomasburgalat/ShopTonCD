@@ -32,7 +32,7 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
             <li class="nav-item"><a class="nav-link text-warning" href="ajouter_album.php">Ajouter un album</a></li>
             <li class="nav-item"><a class="nav-link text-danger" href="../src/includes/logout.php">Déconnexion</a></li>
         </ul>
-    </nav
+    </nav>
 </header>
 
 <main class="container mt-4">
@@ -71,6 +71,7 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
                             <a href="../src/includes/modifier_panier.php?supprimer_id=<?php echo $cd_id; ?>" class="btn btn-danger btn-sm ms-1">X</a>
                         </form>
                     </td>
+
                     <td class="text-end"><?php echo number_format($sous_total, 2); ?> €</td>
                 </tr>
             <?php endforeach; ?>
@@ -82,6 +83,11 @@ $nombre_articles_panier = !empty($_SESSION['panier']) ? array_sum($_SESSION['pan
             </tr>
             </tfoot>
         </table>
+
+        <div class="text-end mt-4">
+            <a href="checkout.php" class="btn btn-success btn-lg">Valider le panier et Payer</a>
+        </div>
+
     <?php endif; ?>
 </main>
 
